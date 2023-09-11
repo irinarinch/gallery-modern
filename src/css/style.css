@@ -53,3 +53,29 @@ figcaption {
 input {
   margin-bottom: 10px;
 }
+
+.file-input {  
+  padding: 100px 200px;
+  opacity: 0;  
+  margin-bottom: 0;
+  
+}
+
+.file-form {
+  width: 652px;
+  position: relative;
+  outline: 1px solid #333;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.file-label { 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  font-size: x-large;
+ 
+  
+}

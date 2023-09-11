@@ -6,9 +6,7 @@ export default class ImageList {
   }
 
   addImage(name, url) {
-    if (this.find(name)) {
-      throw new Error('Image already exists');
-    } else if (name === '') {
+    if (name === '') {
       throw new Error('Invalid name');
     } else {
       const newImage = new Image(name, url);

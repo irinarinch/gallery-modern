@@ -9,15 +9,34 @@ export default class Widget {
     this.form = document.querySelector('.form');
     this.container = document.querySelector('.images-container');
     this.message = document.querySelector('.error-message');
+    this.fileInput = document.querySelector('.file-input');
   }
 
   init() {
     this.onSubmit = this.onSubmit.bind(this);
     this.onInput = this.onInput.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.removeElement = this.removeElement.bind(this);
 
     this.form.addEventListener('submit', this.onSubmit);
     this.urlInput.addEventListener('input', this.onInput);
+    this.fileInput.addEventListener('change', this.onChange);
+
+    setTimeout(() => this.fileInput.dispatchEvent(new MouseEvent('click')), 0);
+  }
+
+  onChange() {
+    const file = this.fileInput.files && this.fileInput.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      this.addElement(file.name, reader.result);
+      this.fileInput.value = '';
+    };
   }
 
   onInput() {
@@ -38,11 +57,17 @@ export default class Widget {
     }
   }
 
-  addElement() {
+  addElement(currentName, currentUrl) {
     const name = this.nameInput.value.trim();
     const url = this.urlInput.value.trim();
+    let listItem;
 
-    const listItem = this.list.addImage(name, url);
+    if (currentUrl) {
+      listItem = this.list.addImage(currentName, currentUrl);
+    } else {
+      listItem = this.list.addImage(name, url);
+    }
+
     const element = new Element();
     const img = element.create(listItem.url, listItem.name);
 
